@@ -62,7 +62,7 @@ class Validation
 
     def conn
         Faraday.new(url: "https://elarchived.files.com/api/rest/v1/folders") do |faraday|
-        faraday.headers["X-FilesAPI-Key"] = 'ec16c700c3266c1da27702296aae796bebd4450ecdac1d732e5129c80cb58542'
+        faraday.headers["X-FilesAPI-Key"] = '9c80cb58542'
         faraday.headers["Content-Type"] = "application/json"
         faraday.headers["Accept"] = "application/json"
         end
