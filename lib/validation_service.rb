@@ -10,72 +10,6 @@ class Validation
     @errors = []
     @paths = []
     end
-
-    def validate
-       first_paths = []
-        folder_path = "Financial_institution_Reporting/Sites"
-        result = get_url(folder_path)
-        result.each do |site|
-          first_paths << site[:path]
-        #   binding.pry
-        end
-        next_paths = []
-        first_paths.each do |p|
-            encoded_path = encode_path(p)
-            result = get_url(encoded_path)
-            result.each do |fi|
-                next_paths << fi[:path]
-            end
-        end
-        third_paths = []
-        next_paths.each do |p|
-            encoded_path = encode_path(p)
-            result = get_url(encoded_path)
-            if result != nil 
-                result.each do |fi|
-                    
-                    if fi[:type] == "directory"
-                        third_paths << fi[:path]
-                        next_paths << fi[:path]
-                    end
-                end
-            end
-            
-        end
-        iv_paths = []
-        third_paths.each do |p|
-            encoded_path = encode_path(p)
-            result = get_url(encoded_path)
-            if result != nil 
-                result.each do |fi|
-                    
-                    if fi[:type] == "directory"
-                        iv_paths << fi[:path]
-                        next_paths << fi[:path]
-                    end
-                end
-            end
-            
-        end
-
-        final_path = []
-        iv_paths.each do |p|
-            encoded_path = encode_path(p)
-            result = get_url(encoded_path)
-            if result != nil 
-                result.each do |fi|
-                    
-                    if fi[:type] == "directory"
-                        final_path << fi[:path]
-                        next_paths << fi[:path]
-                    end
-                end
-            end
-            
-        end
-        next_paths
-
-    end
     
 
     def conn
@@ -99,7 +33,7 @@ class Validation
 
 
 
-    def validate1
+    def validate
     base_folder = "Financial_institution_Reporting/Sites"
     depth = 5  
 
@@ -133,14 +67,13 @@ class Validation
         end
 
             all_collected_paths
-        end
+    end
 
 end
 
 
 a = Validation.new
-test = a.validate
-test_2 = a.validate1
+a.validate
 
 binding.pry
 puts 'done'
