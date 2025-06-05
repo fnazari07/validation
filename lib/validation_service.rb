@@ -1,16 +1,9 @@
 require 'faraday'
 require 'json'
 require 'pry'
+require 'date'
 
 class Validation
-    attr_reader :errors, :paths
-    attr_accessor :errors, :paths
-
-    def initialize
-    @errors = []
-    @paths = []
-    end
-    
 
     def conn
         Faraday.new(url: "https://elarchived.files.com/api/rest/v1/folders") do |faraday|
@@ -32,16 +25,42 @@ class Validation
     end
 
 
-
     def validate
-    base_folder = "Financial_institution_Reporting/Sites"
-    depth = 5  
+        # base_folder = "Financial_institution_Reporting/Sites"
+        base_folder = "Financial_institution_Reporting/test"
+    
+        depth = 5 
+        error_folders = []
+        all_paths = traverse_paths(base_folder, depth)
+        today_str = Date.today.strftime("%Y-%m-%d")
+        filtered_paths = all_paths.reject { |path| path.include?("US National") }
+        filtered_paths.each do |path|
+            encoded = encode_path(path)
+            folder_items = get_url(encoded)
 
-    all_paths = traverse_paths(base_folder, depth)
+            next if folder_items.nil? || folder_items.empty?
 
+            csv_found = false
+            pdf_found = false
+
+            folder_items.each do |item|
+            next unless item[:type] == "file"
+            name = item[:display_name] || item[:path]
+
+            csv_found = true if name.end_with?(".csv") && name.include?(today_str)
+            pdf_found = true if name.end_with?(".pdf") && name.include?(today_str)
+
+            break if csv_found && pdf_found
+            end
+
+            unless csv_found && pdf_found
+            error_folders << path
+            end
     end
 
-   
+    # binding.pry
+    error_folders
+    end
     
     def traverse_paths(start_path, levels)
         paths = [start_path]
@@ -75,74 +94,5 @@ end
 a = Validation.new
 a.validate
 
-binding.pry
+# binding.pry
 puts 'done'
-
-
-
-
-#  def validate
-#        first_paths = []
-#         folder_path = "Financial_institution_Reporting/Sites"
-#         result = get_url(folder_path)
-#         result.each do |site|
-#           first_paths << site[:path]
-#         #   binding.pry
-#         end
-#         next_paths = []
-#         first_paths.each do |p|
-#             encoded_path = encode_path(p)
-#             result = get_url(encoded_path)
-#             result.each do |fi|
-#                 next_paths << fi[:path]
-#             end
-#         end
-#         third_paths = []
-#         next_paths.each do |p|
-#             encoded_path = encode_path(p)
-#             result = get_url(encoded_path)
-#             if result != nil 
-#                 result.each do |fi|
-                    
-#                     if fi[:type] == "directory"
-#                         third_paths << fi[:path]
-#                         next_paths << fi[:path]
-#                     end
-#                 end
-#             end
-            
-#         end
-#         iv_paths = []
-#         third_paths.each do |p|
-#             encoded_path = encode_path(p)
-#             result = get_url(encoded_path)
-#             if result != nil 
-#                 result.each do |fi|
-                    
-#                     if fi[:type] == "directory"
-#                         iv_paths << fi[:path]
-#                         next_paths << fi[:path]
-#                     end
-#                 end
-#             end
-            
-#         end
-
-#         final_path = []
-#         iv_paths.each do |p|
-#             encoded_path = encode_path(p)
-#             result = get_url(encoded_path)
-#             if result != nil 
-#                 result.each do |fi|
-                    
-#                     if fi[:type] == "directory"
-#                         final_path << fi[:path]
-#                         next_paths << fi[:path]
-#                     end
-#                 end
-#             end
-            
-#         end
-#         next_paths
-
-#     end
