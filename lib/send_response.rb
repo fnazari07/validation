@@ -14,7 +14,7 @@ class SendResponse
     # to = Email.new(email: 'CMillard@empyreallogistics.com', name: "Test")
     
     subject = 'Results'
-    content = Content.new(type: 'text/html', value: "<p>Here is your list for which folders to check:</p>#{list_content}")
+    content = Content.new(type: 'text/html', value: "<p>Here is your list for which folders to check:</p>#{list_content}Folders to check : #{messages.count}")
     mail = Mail.new(from, subject, to, content)
 
     sg = SendGrid::API.new(api_key: ENV['SENDGRID_API_KEY'])
