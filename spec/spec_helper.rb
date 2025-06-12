@@ -1,4 +1,15 @@
 require 'faraday'
+require 'sendgrid-ruby'
+include SendGrid
+
+# require_relative '../lib/validation_service'
+require 'date'
+# require_relative '../lib/send_response'
+
+
+require 'json'
+require 'pry'
+
 
 require 'webmock/rspec'
 require 'simplecov'
