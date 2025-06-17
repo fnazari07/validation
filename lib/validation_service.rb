@@ -57,7 +57,6 @@ class Validation
             end
     end
 
-    # binding.pry
     error_folders
     end
     

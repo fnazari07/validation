@@ -4,7 +4,6 @@ require 'pry'
 
 
 
-# binding.pry
 validtions = Validation.new
 
 result = validtions.validate
