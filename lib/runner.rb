@@ -3,10 +3,10 @@ require './lib/validation_service'
 require 'pry'
 
 
-
 validtions = Validation.new
 
 result = validtions.validate
+binding.pry
 count = result.count
 if result.nil?
   result = ["All docs uploaded."] 
