@@ -6,7 +6,7 @@ require 'pry'
 
 
 class SendResponse
-  def self.send_response(messages)
+  def self.send_response(messages,count)
     list_content = "<ul>" + messages.map { |msg| "<li>#{msg}</li>" }.join + "</ul>"
 
     from = Email.new(email: 'it@empyreallogistics.com', name: "Validator")
@@ -14,7 +14,7 @@ class SendResponse
     # to = Email.new(email: 'CMillard@empyreallogistics.com', name: "Test")
     
     subject = 'Results'
-    content = Content.new(type: 'text/html', value: "<p>Here is your list for which folders to check:</p>#{list_content}Folders to check : #{messages.count}")
+    content = Content.new(type: 'text/html', value: "<p>Here is your list for which folders to check:</p>#{list_content}Folders to check : #{count}")
     mail = Mail.new(from, subject, to, content)
 
     sg = SendGrid::API.new(api_key: ENV['SENDGRID_API_KEY'])

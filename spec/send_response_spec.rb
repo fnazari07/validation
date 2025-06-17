@@ -17,7 +17,7 @@ RSpec.describe SendResponse do
       allow(mail_double).to receive(:_).with('send').and_return(send_double)
       allow(send_double).to receive(:post).and_return(fake_response)
 
-      response = SendResponse.send_response(messages)
+      response = SendResponse.send_response(messages,1)
 
       expect(SendGrid::API).to have_received(:new)
       expect(response.status_code).to eq(202)

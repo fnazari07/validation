@@ -8,10 +8,11 @@ require 'pry'
 validtions = Validation.new
 
 result = validtions.validate
-
+count = result.count
 if result.nil?
-  result = ["All docs uploaded."]
+  result = ["All docs uploaded."] 
+  count = 0
 end
 
 
-SendResponse.send_response(result)
+SendResponse.send_response(result,count)

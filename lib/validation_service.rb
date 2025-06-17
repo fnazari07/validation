@@ -6,9 +6,7 @@ require 'date'
 class Validation
 
     def conn
-        # Faraday.new(url: "https://elarchived.files.com/api/rest/v1/folders") do |faraday|
         Faraday.new(url: "https://empyreallogistics.files.com/api/rest/v1/folders") do |faraday|
-        # faraday.headers["X-FilesAPI-Key"] = ENV["FILES_API_KEY"]
         faraday.headers["X-FilesAPI-Key"] = ENV["FILES_API_KEY_P"]
         faraday.headers["Content-Type"] = "application/json"
         faraday.headers["Accept"] = "application/json"
@@ -29,7 +27,6 @@ class Validation
 
     def validate
         base_folder = "Financial_institution_Reporting/Sites"
-        # base_folder = "Financial_institution_Reporting/test"
     
         depth = 5 
         error_folders = []
