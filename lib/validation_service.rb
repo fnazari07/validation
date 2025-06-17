@@ -89,9 +89,3 @@ class Validation
 
 end
 
-
-# a = Validation.new
-# a.validate
-
-# # binding.pry
-# puts 'done'
