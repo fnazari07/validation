@@ -22,5 +22,5 @@ jobs:
 
     - name: Build and push Docker image
       run: |
-        docker build -t myacrname.azurecr.io/ruby-scheduler:latest .
-        docker push myacrname.azurecr.io/ruby-scheduler:latest
+        docker build -t faisalservice.azurecr.io/ruby-scheduler:latest .
+        docker push faisalservice.azurecr.io/ruby-scheduler:latest
