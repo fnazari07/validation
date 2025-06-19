@@ -10,8 +10,8 @@ class SendResponse
     list_content = "<ul>" + messages.map { |msg| "<li>#{msg}</li>" }.join + "</ul>"
 
     from = Email.new(email: 'it@empyreallogistics.com', name: "Validator")
-    to = Email.new(email: 'mfaisalnazari@empyreallogistics.com', name: "Test")
-    # to = Email.new(email: 'CMillard@empyreallogistics.com', name: "Test")
+    to = Email.new(email: 'rda@empyreallogistics.com', name: "RDA")
+
     
     subject = 'Results'
     content = Content.new(type: 'text/html', value: "<p>Here is your list for which folders to check:</p>#{list_content}Folders to check : #{count}")
